@@ -488,6 +488,9 @@ export class PanelWebview implements vscode.WebviewViewProvider {
         const fontSize = vscode.workspace.getConfiguration().get<number>("editor.fontSize") ?? 12;
         const scaling = fontSize < 14 ? "90%" : "100%";
 
+        const apiKey = vscode.workspace.getConfiguration()?.get<string>("refactai.apiKey") ?? "";
+        const addressURL = vscode.workspace.getConfiguration()?.get<string>("refactai.addressURL") ?? "";
+
         const nonce = this.getNonce();
         return `<!DOCTYPE html>
             <html lang="en" class="light">
@@ -525,7 +528,9 @@ export class PanelWebview implements vscode.WebviewViewProvider {
                         features: {
                             vecdb: ${vecdb},
                             ast: ${ast},
-                        }
+                        },
+                        apiKey: "${apiKey}",
+                        addressURL: "${addressURL}"
                     })
                 }
                 </script>
